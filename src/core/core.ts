@@ -1,7 +1,11 @@
 import { basename } from "https://deno.land/std/path/mod.ts";
 import { Args } from "./args.ts";
 import { PromptBuilder } from "./prompt_builder.ts";
-import { GitHandler } from "./git_handler.ts";
+import {
+  defaultDenoCommandRunner,
+  defaultFsChecker,
+  GitHandler,
+} from "./git_handler.ts";
 
 export class Core {
   private args: Args;
@@ -12,7 +16,7 @@ export class Core {
   constructor() {
     this.args = this.parseArgs(Deno.args);
     this.promptBuilder = new PromptBuilder();
-    this.gitHandler = new GitHandler();
+    this.gitHandler = new GitHandler(defaultDenoCommandRunner, defaultFsChecker);
   }
 
   public async start(): Promise<string> {
