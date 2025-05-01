@@ -1,12 +1,12 @@
-type CommandResult = {
+export type CommandResult = {
   stdout: string;
   stderr: string;
   exitCode: number;
 };
 
-type CommandRunner = (cmdArgs: string[]) => Promise<CommandResult>;
+export type CommandRunner = (cmdArgs: string[]) => Promise<CommandResult>;
 
-type FileSystemChecker = {
+export type FileSystemChecker = {
   stat: (
     path: string,
   ) => Promise<(Deno.FileInfo & { isDirectory: true }) | null>;
