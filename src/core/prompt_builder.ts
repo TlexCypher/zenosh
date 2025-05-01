@@ -25,6 +25,7 @@ export class PromptBuilder {
   }
 
   public branch(branch: string): PromptBuilder {
+    if (branch.length == 0) return this;
     this.gitBranch = Colorlizer.boldize(
       `${Colorlizer.MAGENTA("git:(")}${Colorlizer.RED(branch)}${
         Colorlizer.MAGENTA(")")
