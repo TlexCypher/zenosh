@@ -2,7 +2,6 @@ import { basename } from "https://deno.land/std/path/mod.ts";
 import { Args } from "./args.ts";
 import { PromptBuilder } from "./prompt_builder.ts";
 import { GitHandler } from "./git_handler.ts";
-import { stat } from "node:fs";
 
 export class Core {
   private args: Args;
