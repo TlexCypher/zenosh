@@ -10,7 +10,7 @@ const createMockRunner = (
   results: Array<Partial<CommandResult>>,
 ): CommandRunner => {
   let callIndex = 0;
-  return (cmdArgs: string[]) => {
+  return (_cmdArgs: string[]) => {
     const result = results[callIndex] ??
       { exitCode: 1, stderr: "Mock result not defined" };
     callIndex++;
@@ -25,7 +25,7 @@ const createMockRunner = (
 const createMockFsChecker = (
   statResult: (Deno.FileInfo & { isDirectory: true }) | null,
 ): FileSystemChecker => ({
-  stat: (path: string) => {
+  stat: (_path: string) => {
     return Promise.resolve(statResult);
   },
 });
