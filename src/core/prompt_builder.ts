@@ -5,6 +5,7 @@ export class PromptBuilder {
   private currentDirectory: string = "";
   private gitBranch: string = "";
   private gitStatus: string = "";
+  private prStatus: string = "";
 
   public build(): string {
     this.prompt = `${this.currentDirectory} `;
@@ -13,6 +14,9 @@ export class PromptBuilder {
     }
     if (this.gitStatus.length > 0) {
       this.prompt += `${this.gitStatus} `;
+    }
+    if (this.prStatus.length > 0) {
+      this.prompt += `${this.prStatus} `;
     }
     return this.prompt;
   }
@@ -37,6 +41,15 @@ export class PromptBuilder {
   public status(status: boolean): PromptBuilder {
     if (status) {
       this.gitStatus = `${Colorlizer.YELLOW("✘")}`;
+    }
+    return this;
+  }
+
+  public pr(status: string): PromptBuilder {
+    if (status.length > 0) {
+      this.prStatus = `${Colorlizer.MAGENTA(`(`)}${
+        Colorlizer.CYAN(`PR:${status}`)
+      }${Colorlizer.MAGENTA(`)`)}`;
     }
     return this;
   }
