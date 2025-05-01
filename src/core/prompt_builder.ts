@@ -7,8 +7,13 @@ export class PromptBuilder {
   private gitStatus: string = "";
 
   public build(): string {
-    this.prompt =
-      `${this.currentDirectory} ${this.gitBranch} ${this.gitStatus} `;
+    this.prompt = `${this.currentDirectory} `;
+    if (this.gitBranch.length > 0) {
+      this.prompt += `${this.gitBranch} `;
+    }
+    if (this.gitStatus.length > 0) {
+      this.prompt += `${this.gitStatus} `;
+    }
     return this.prompt;
   }
 
@@ -20,9 +25,11 @@ export class PromptBuilder {
   }
 
   public branch(branch: string): PromptBuilder {
-    this.gitBranch = Colorlizer.boldize(`${Colorlizer.MAGENTA("git:(")}${Colorlizer.RED(branch)}${
-      Colorlizer.MAGENTA(")")
-    }`);
+    this.gitBranch = Colorlizer.boldize(
+      `${Colorlizer.MAGENTA("git:(")}${Colorlizer.RED(branch)}${
+        Colorlizer.MAGENTA(")")
+      }`,
+    );
     return this;
   }
 
