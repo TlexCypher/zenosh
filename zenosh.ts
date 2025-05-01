@@ -1,7 +1,8 @@
 import { Core } from "./src/core.ts";
 
-function main() {
-  console.log(new Core().start());
+async function main() {
+  const prompt = await (new Core()).start();
+  console.log(prompt);
 }
 
 main();

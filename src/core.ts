@@ -1,10 +1,12 @@
 import { basename } from "https://deno.land/std/path/mod.ts";
 import { Args } from "./args.ts";
 import { PromptBuilder } from "./prompt_builder.ts";
+import { GitHandler } from "./git_handler.ts";
 
 export class Core {
   private args: Args;
   private promptBuilder: PromptBuilder;
+  private gitHandler: GitHandler;
   private prompt: string = "";
 
   constructor() {
@@ -17,13 +19,14 @@ export class Core {
       );
     }
     this.promptBuilder = new PromptBuilder();
+    this.gitHandler = new GitHandler();
   }
 
-  public start(): string {
+  public async start(): Promise<string> {
     try {
       this.prompt = this.args.isInstant()
         ? this.buildInstant()
-        : this.buildFull();
+        : await this.buildFull();
       return this.prompt;
     } catch (e) {
       console.error(`Error building prompt: ${e}`);
@@ -32,16 +35,17 @@ export class Core {
   }
 
   private parseArgs(args: string[]): Args {
-    //TODO: parse instant option
-    return new Args(true);
+    return new Args((args[0] === "--instant") && (args.length == 1));
   }
 
   private buildInstant(): string {
     return this.promptBuilder.directory(basename(Deno.cwd())).build();
   }
 
-  private buildFull(): string {
-    return "";
+  private async buildFull(): Promise<string> {
+    const branch = await this.gitHandler.getBranch();
+    const status = await this.gitHandler.isDirtyStaging();
+    return this.promptBuilder.directory(basename(Deno.cwd())).branch(branch)
+      .status(status).build();
   }
 }
-

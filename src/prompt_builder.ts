@@ -8,7 +8,7 @@ export class PromptBuilder {
 
   public build(): string {
     this.prompt =
-      `${this.currentDirectory} ${this.gitBranch} ${this.gitStatus}`;
+      `${this.currentDirectory} ${this.gitBranch} ${this.gitStatus} `;
     return this.prompt;
   }
 
