@@ -1,4 +1,4 @@
-import { Core } from "./src/core.ts";
+import { Core } from "./src/core/core.ts";
 
 async function main() {
   const prompt = await (new Core()).start();

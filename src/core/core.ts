@@ -10,28 +10,16 @@ export class Core {
   private prompt: string = "";
 
   constructor() {
-    try {
-      this.args = this.parseArgs(Deno.args);
-    } catch (e) {
-      console.error(`Argument parsing failed during initialization: ${e}`);
-      throw new Error(
-        "Failed to initialize Core due to argument parsing error.",
-      );
-    }
+    this.args = this.parseArgs(Deno.args);
     this.promptBuilder = new PromptBuilder();
     this.gitHandler = new GitHandler();
   }
 
   public async start(): Promise<string> {
-    try {
-      this.prompt = this.args.isInstant()
-        ? this.buildInstant()
-        : await this.buildFull();
-      return this.prompt;
-    } catch (e) {
-      console.error(`Error building prompt: ${e}`);
-      return "";
-    }
+    this.prompt = this.args.isInstant()
+      ? this.buildInstant()
+      : await this.buildFull();
+    return this.prompt;
   }
 
   private parseArgs(args: string[]): Args {

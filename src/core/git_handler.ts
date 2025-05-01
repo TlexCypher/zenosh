@@ -14,7 +14,6 @@ export class GitHandler {
       if (exitCode !== 0) return "";
       return stdout.trim();
     } catch (e) {
-      console.error(`Failed to get branch name: ${e}`);
       return "";
     }
   }

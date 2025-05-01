@@ -13,14 +13,16 @@ export class PromptBuilder {
   }
 
   public directory(directory: string): PromptBuilder {
-    this.currentDirectory = Colorlizer.CYAN(directory);
+    this.currentDirectory = Colorlizer.boldize(
+      `${Colorlizer.GREEN("▶︎")} ${Colorlizer.CYAN(directory)}`,
+    );
     return this;
   }
 
   public branch(branch: string): PromptBuilder {
-    this.gitBranch = `${Colorlizer.YELLOW("(")}${Colorlizer.MAGENTA(branch)}${
-      Colorlizer.YELLOW(")")
-    }`;
+    this.gitBranch = Colorlizer.boldize(`${Colorlizer.MAGENTA("git:(")}${Colorlizer.RED(branch)}${
+      Colorlizer.MAGENTA(")")
+    }`);
     return this;
   }
 
