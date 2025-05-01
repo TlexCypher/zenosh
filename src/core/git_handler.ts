@@ -4,6 +4,7 @@ export class GitHandler {
   public async isDirtyStaging(): Promise<boolean> {
     const { stdout, exitCode } = await $`git status --porcelain`.quiet();
     if (exitCode !== 0) return false;
+    console.log(stdout.trim().split("\n"));
     return stdout.trim().split("\n").length > 0;
   }
 
