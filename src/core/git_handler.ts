@@ -1,3 +1,5 @@
+import * as path from "https://deno.land/std@0.224.0/path/mod.ts";
+
 export type CommandResult = {
   stdout: string;
   stderr: string;
@@ -77,8 +79,25 @@ export class GitHandler {
   }
 
   private async hasGitDirectory(): Promise<boolean> {
-    const fileInfo = await this.fs.stat(".git");
-    return fileInfo?.isDirectory ?? false;
+    return await this.findGitDirectoryRecursively(
+      path.resolve(Deno.cwd()),
+      path.parse(Deno.cwd()).root,
+    );
+  }
+
+  private async findGitDirectoryRecursively(
+    current: string,
+    root: string,
+  ): Promise<boolean> {
+    if (current === root) {
+      return false;
+    }
+    const fileInfo = await this.fs.stat(`${current}/.git`);
+    const found = fileInfo?.isDirectory ?? false;
+    if (found) {
+      return true;
+    }
+    return await this.findGitDirectoryRecursively(path.dirname(current), root);
   }
 
   private async hasGithubCLI(): Promise<boolean> {
