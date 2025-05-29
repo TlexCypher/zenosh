@@ -1,9 +1,9 @@
 ## Zenosh
 Zenosh is a highly useful git prompt generator.
 
-Zenosh is inspired by Robbyrussell oh-my-zsh themes.
+This is inspired by Robbyrussell oh-my-zsh themes.
 
-Zenosh has lazy drawing functionality.
+Also Zenosh has lazy drawing functionality.
 
 First of all, Zenosh draws instant prompt including `Git-Branch`, `Git-Status`, `Repository-Name`.
 
